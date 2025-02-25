@@ -4,7 +4,7 @@ class WelcomeScreen extends StatelessWidget {
   final String prenom;
   final String nom;
 
-  WelcomeScreen({required this.prenom, required this.nom});
+  const WelcomeScreen({Key? key, required this.prenom, required this.nom}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class WelcomeScreen extends StatelessWidget {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Color(0xFFEBC894), Color(0xFFB49EF4)],
             begin: Alignment.topCenter,
@@ -21,7 +21,7 @@ class WelcomeScreen extends StatelessWidget {
         ),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
@@ -35,21 +35,27 @@ class WelcomeScreen extends StatelessWidget {
                     Text(
                       "Bienvenue $prenom $nom 😊❤️",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    TextButton(
+                    const SizedBox(height: 10),
+                    ElevatedButton(
                       onPressed: () {},
-                      child: Text(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
                         "Interface d’application",
                         style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 14,
-                          decoration: TextDecoration.none,
+                          color: Colors.white,
+                          fontSize: 16,
                         ),
                       ),
                     ),
