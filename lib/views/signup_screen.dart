@@ -1,20 +1,38 @@
 import 'package:flutter/material.dart';
+import 'welcome_screen.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SignUpScreen(),
-    );
-  }
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class SignUpScreen extends StatelessWidget {
+class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController prenomController = TextEditingController();
+  final TextEditingController nomController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  void _register() {
+    String prenom = prenomController.text.trim();
+    String nom = nomController.text.trim();
+
+    if (prenom.isNotEmpty && nom.isNotEmpty) {
+      print("Prénom: $prenom, Nom: $nom, Email: ${emailController.text}");
+      
+      // ✅ Aller vers la page d'accueil avec les infos
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WelcomeScreen(prenom: prenom, nom: nom),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Veuillez remplir tous les champs")),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +41,7 @@ class SignUpScreen extends StatelessWidget {
         height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFFEBC894), Color(0xFFB49EF4)], // Dégradé
+            colors: [Color(0xFFEBC894), Color(0xFFB49EF4)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -31,7 +49,7 @@ class SignUpScreen extends StatelessWidget {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: SingleChildScrollView( // Ajout pour éviter l'overflow
+            child: SingleChildScrollView(
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -55,16 +73,16 @@ class SignUpScreen extends StatelessWidget {
                         style: TextStyle(color: Colors.grey),
                       ),
                       SizedBox(height: 16),
-                      _buildTextField("prénom"),
+                      _buildTextField("Prénom", prenomController),
                       SizedBox(height: 12),
-                      _buildTextField("nom"),
+                      _buildTextField("Nom", nomController),
                       SizedBox(height: 12),
-                      _buildTextField("email"),
+                      _buildTextField("Email", emailController),
                       SizedBox(height: 12),
-                      _buildPasswordField("*******"),
+                      _buildPasswordField("*******", passwordController),
                       SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: _register, // ✅ Appelle la fonction de validation
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
                           padding: EdgeInsets.symmetric(vertical: 14),
@@ -85,11 +103,13 @@ class SignUpScreen extends StatelessWidget {
                         children: [
                           Text("Already have an account? "),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {}, // À ajouter plus tard
                             child: Text(
                               "Login",
                               style: TextStyle(
-                                  color: Colors.blue, fontWeight: FontWeight.bold),
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
@@ -105,11 +125,12 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(String hint) {
+  Widget _buildTextField(String hint, TextEditingController controller) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: Color(0xFFA3A3A3)), // Couleur du hint
+        hintStyle: TextStyle(color: Color(0xFFA3A3A3)),
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(
@@ -121,12 +142,13 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPasswordField(String hint) {
+  Widget _buildPasswordField(String hint, TextEditingController controller) {
     return TextField(
+      controller: controller,
       obscureText: true,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: Color(0xFFA3A3A3)), // Couleur du hint
+        hintStyle: TextStyle(color: Color(0xFFA3A3A3)),
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(

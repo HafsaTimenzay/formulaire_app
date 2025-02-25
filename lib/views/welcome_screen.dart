@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  final String prenom;
+  final String nom;
+
+  WelcomeScreen({required this.prenom, required this.nom});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +14,7 @@ class WelcomeScreen extends StatelessWidget {
         height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFFEBC894), Color(0xFFB49EF4)], // Gradient colors
+            colors: [Color(0xFFEBC894), Color(0xFFB49EF4)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -28,7 +33,7 @@ class WelcomeScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Bienvenue Hafsa Timenzay 🎉",
+                      "Bienvenue $prenom $nom 😊❤️",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 28,
@@ -38,13 +43,13 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     TextButton(
-                      onPressed: () {}, // You can add navigation here
+                      onPressed: () {},
                       child: Text(
                         "Interface d’application",
                         style: TextStyle(
                           color: Colors.blue,
                           fontSize: 14,
-                          decoration: TextDecoration.underline,
+                          decoration: TextDecoration.none,
                         ),
                       ),
                     ),
